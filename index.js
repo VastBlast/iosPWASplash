@@ -12,8 +12,20 @@ function iosPWASplash(icon, color = 'white') {
     }
 
     // Calculate the device's width and height
-    const deviceWidth = screen.width;
-    const deviceHeight = screen.height;
+    let deviceWidth = screen.width;
+    let deviceHeight = screen.height;
+
+    // The following detects the device's width and height in private mode 
+    if (window.visualViewport?.width) {
+        const deviceWidthPM = Math.round(window.visualViewport.width * window.visualViewport.scale);
+        // if not private mode, then both values should be equal so the code will not run
+        if (deviceWidth > deviceWidthPM) {
+            deviceWidth = deviceWidthPM;
+            // in private mode, uses the direct ratio to calculate the height since this is the only way as of now
+            deviceHeight = (284 / 131) * deviceWidth;
+        }
+    }
+
     // Calculate the pixel ratio
     const pixelRatio = window.devicePixelRatio || 1;
     // Create two canvases and get their contexts to draw landscape and portrait splash screens.
