@@ -69,6 +69,14 @@ function iosPWASplash(icon, color = 'white') {
         const imageDataURL = canvas.toDataURL('image/png');
         const imageDataURL2 = canvas2.toDataURL('image/png');
 
+        // Add apple-mobile-web-app-capable if not already present
+        if (!document.querySelector('meta[name="apple-mobile-web-app-capable"]')) {
+            const metaTag = document.createElement('meta');
+            metaTag.setAttribute('name', 'apple-mobile-web-app-capable');
+            metaTag.setAttribute('content', 'yes');
+            document.head.appendChild(metaTag);
+        }
+
         // Create the first startup image <link> tag (splash screen)
 
         const appleTouchStartupImageLink = document.createElement('link');
